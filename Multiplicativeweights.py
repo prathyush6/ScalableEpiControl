@@ -62,7 +62,6 @@ def MWU(G, S, epsilon, delta_val, lambda_val, M, foldername):
                   while (v != "-1"):
                         path.append(v)
                         v = parent[v]
-                  #print(path, u)
                   for v in path:
                       if v != "-1" and v not in S:
                          if c[v] < minc:
@@ -188,10 +187,6 @@ def generateSamples(G, S, p):
             v2 = edge[1]
             if v1 in infected_nodes[i] and v2 in infected_nodes[i]:
                H[i].add_edge(v1, v2)
- 
-    #print("H_j^': sampled graph")
-    #print("#infections ", len(H.nodes()))
-    #print("#edges ", len(H.edges()))
     return H
             
 #generate a random sample
@@ -230,8 +225,5 @@ def generateSample(G, S, p):
         if v1 in infected_nodes and v2 in infected_nodes:
            H.add_edge(v1, v2)
 
-    #print("H_j^': sampled graph")
-    #print("#infections ", len(H.nodes()))
-    #print("#edges ", len(H.edges()))
     return H
 
