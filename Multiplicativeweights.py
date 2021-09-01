@@ -51,17 +51,24 @@ def MWU(G, S, epsilon, delta_val, lambda_val, M, foldername):
         parent_t, dist_t = nx.dijkstra_predecessor_and_distance(Hr, s, weight = 'weight')
         spcomp += 1
         parent, dist, alpha, active_nodes = parent_dist_alpha_computation(Hr, delta_val, epsilon, r, parent_t, dist_t, S)
-        while (alpha <= delta_val * math.pow((1+epsilon), r):
+        threshold = delta_val * math.pow((1+epsilon), r)
+        while alpha <= threshold:
+              print("alpha, threshold: ", alpha, delta_val, flush = True)
               if len(active_nodes) == 0:
-                 print("No more active nodes")
+                 print("No more active nodes", flush = True)
                  break
               for u in active_nodes:
                   path = []
                   v = u
                   minc = math.inf
+                  dist_path = 0.0
                   while (v != "-1"):
                         path.append(v)
                         v = parent[v]
+                        dist_path += ell[v]
+                  print("dist_path", dist_path, flush = True)
+                  if dist_path >= threshold:
+                     continue
                   for v in path:
                       if v != "-1" and v not in S:
                          if c[v] < minc:
@@ -72,7 +79,7 @@ def MWU(G, S, epsilon, delta_val, lambda_val, M, foldername):
                         for v in path:
                             if v not in S:
                                sum_path += ell[v] * math.pow(1+(epsilon* minc)/c[v], d)
-                        if sum_path > delta_val * math.pow((1+epsilon), r):
+                        if sum_path >= threshold:
                            break
                         d += 1
                   for v in path:
